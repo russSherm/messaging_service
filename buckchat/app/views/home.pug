@@ -1,0 +1,66 @@
+doctype html
+html(lang="en")
+    head
+        title Buckchat Home Page
+
+        link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css")
+        link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css")
+        link(rel="stylesheet", href="https://unpkg.com/basscss@8.0.2/css/basscss.min.css")
+        script(src="http://code.jquery.com/jquery-3.1.1.min.js")
+        script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js")
+
+    body
+        div.container
+            form.form-horizontal(method='get', action='/logout')
+                div.form-group
+                    div.col-sm-6
+                    button.btn.btn-default.pull-right(type="submit") Logout
+
+            h1 Welcome!
+
+            if (userBuckets)
+                p Thank you for visiting Buckchat, #{name}.
+            else
+                p Thank you for visiting Buckchat.
+
+
+            //- Displaying the drip creation form
+            form.form-horizontal(method='post', action='/buckchat/create-drip')
+                fieldset
+
+                    p Create a drip to share what's on your mind. Use the hashtag (#) to specify one or more buckets for your drip. Example:
+
+                    blockquote I love the Smokey Mountains! #hiking
+
+                    if (createDripSuccess)
+                        p.alert.alert-success #{createDripSuccess}
+
+
+                    if (createDripError)
+                        p.alert.alert-danger Error: #{createDripError}
+
+
+                    div.form-group
+                        div.col-sm-6
+                            textarea.forwordm-control(name="text", placeholder="Type drip text here", rows="4" cols="50", required, maxlength=160)
+
+                    //- Checkbox to create anonymous drips
+                    p
+                        label
+                            input(type="checkbox", name="anonymous")
+                            | &nbsp;&nbsp;Make anonymous #[span.italic.regular (check to hide yourself from being seen as the author)]
+
+                    div.form-group
+                        div.col-sm-6
+                            button.btn.btn-default(type="submit") Drip
+
+            //- Displaying the user's buckets
+            if (userBuckets)
+                form.form-horizontal(method='post', action='/buckchat/show-drip')
+                    legend Bucket List
+
+                    p Click a bucket name to view its drips.
+
+                    each individualBucket in userBuckets
+                        div.col-sm-3.form-group
+                            button.btn.btn-info(type="submit", name="individualBucketButton", value=individualBucket) #{individualBucket}
