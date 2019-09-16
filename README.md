@@ -5,10 +5,6 @@
 
 The Buckchat Messaging Service is a twitter-like service for making public and private posts.
 
-## Amazon Deployment
-
-View our completed Buckchat application here: http://52.91.252.238:5000
-
 ## Organization
 
 The `docs` directory contains documentation artifacts (including metric measurements and definitions, requirements, and design artifacts).
